@@ -8,7 +8,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "development",
     name: "GitHub",
     icon: "github",
-    priority: "high",
+
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://api.github.com/users/{name}",
@@ -19,7 +19,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "development",
     name: "npm",
     icon: "package",
-    priority: "high",
+
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://registry.npmjs.org/{name}",
@@ -30,7 +30,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "development",
     name: "PyPI",
     icon: "package",
-    priority: "high",
+
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://pypi.org/pypi/{name}/json",
@@ -41,7 +41,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "development",
     name: "crates.io",
     icon: "package",
-    priority: "medium",
+
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://crates.io/api/v1/crates/{name}",
@@ -52,8 +52,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "development",
     name: "Docker Hub",
     icon: "container",
-    priority: "medium",
-    checkMethod: "status-code",
+    checkMethod: "api-official",
     timeout: 5000,
     apiEndpoint: "https://hub.docker.com/v2/repositories/{name}",
   },
@@ -63,7 +62,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "development",
     name: "Homebrew",
     icon: "package",
-    priority: "low",
+
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://formulae.brew.sh/api/formula/{name}.json",
@@ -75,7 +74,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "social",
     name: "Twitter/X",
     icon: "twitter",
-    priority: "high",
+
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://twitter.com/{name}",
@@ -100,7 +99,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "social",
     name: "Instagram",
     icon: "instagram",
-    priority: "high",
+
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.instagram.com/{name}",
@@ -125,7 +124,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "social",
     name: "Facebook",
     icon: "facebook",
-    priority: "medium",
+
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.facebook.com/{name}",
@@ -148,7 +147,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "social",
     name: "LinkedIn",
     icon: "linkedin",
-    priority: "medium",
+
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.linkedin.com/in/{name}",
@@ -163,7 +162,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "social",
     name: "TikTok",
     icon: "music",
-    priority: "medium",
+
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.tiktok.com/@{name}",
@@ -178,7 +177,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "social",
     name: "YouTube",
     icon: "youtube",
-    priority: "high",
+
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://www.youtube.com/@{name}",
@@ -194,7 +193,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "stores",
     name: "Chrome Web Store",
     icon: "chrome",
-    priority: "medium",
+
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://chrome.google.com/webstore/search/{name}",
@@ -209,7 +208,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "stores",
     name: "Firefox Add-ons",
     icon: "firefox",
-    priority: "low",
+
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://addons.mozilla.org/en-US/firefox/search/?q={name}",
@@ -224,7 +223,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "stores",
     name: "VS Code Extensions",
     icon: "code",
-    priority: "medium",
+
     checkMethod: "api-official",
     timeout: 8000,
     apiEndpoint:
@@ -236,7 +235,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "stores",
     name: "Apple App Store",
     icon: "smartphone",
-    priority: "low",
+
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://apps.apple.com/search?term={name}",
@@ -251,7 +250,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "stores",
     name: "Google Play Store",
     icon: "smartphone",
-    priority: "low",
+
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://play.google.com/store/search?q={name}",
@@ -267,7 +266,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "domains",
     name: ".com",
     icon: "globe",
-    priority: "high",
+
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -277,7 +276,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "domains",
     name: ".net",
     icon: "globe",
-    priority: "medium",
+
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -287,7 +286,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "domains",
     name: ".org",
     icon: "globe",
-    priority: "medium",
+
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -297,7 +296,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "domains",
     name: ".io",
     icon: "globe",
-    priority: "high",
+
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -307,7 +306,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "domains",
     name: ".dev",
     icon: "globe",
-    priority: "medium",
+
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -317,7 +316,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     category: "domains",
     name: ".fr",
     icon: "globe",
-    priority: "low",
+
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -327,12 +326,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
 export const getPlatformsByCategory = (category: string) => {
   return Object.values(PLATFORM_CONFIGS).filter(
     (config) => config.category === category
-  );
-};
-
-export const getPlatformsByPriority = (priority: "high" | "medium" | "low") => {
-  return Object.values(PLATFORM_CONFIGS).filter(
-    (config) => config.priority === priority
   );
 };
 

@@ -63,7 +63,6 @@ export const checkSinglePlatform = async (
     category: config.category,
     name,
     status: 'checking',
-    priority: config.priority,
     lastChecked: Date.now()
   };
   
@@ -111,7 +110,6 @@ export const checkAllPlatforms = async (
     category: config.category,
     name,
     status: 'checking' as const,
-    priority: config.priority,
     lastChecked: Date.now()
   }));
   
@@ -268,12 +266,11 @@ export const exportResults = (searchResult: SearchResult, format: 'json' | 'csv'
     
     URL.revokeObjectURL(url);
   } else if (format === 'csv') {
-    const headers = ['Platform', 'Category', 'Status', 'Priority', 'URL', 'Error'];
+    const headers = ['Platform', 'Category', 'Status', 'URL', 'Error'];
     const rows = searchResult.results.map(result => [
       result.platform,
       result.category,
       result.status,
-      result.priority || '',
       result.url || '',
       result.error || ''
     ]);

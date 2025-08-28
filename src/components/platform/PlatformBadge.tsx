@@ -80,46 +80,6 @@ export const PlatformBadge = ({
   );
 };
 
-// Badge de priorité
-interface PriorityBadgeProps {
-  priority: 'high' | 'medium' | 'low';
-  className?: string;
-  size?: 'sm' | 'md' | 'lg';
-}
-
-const PRIORITY_CONFIG = {
-  high: {
-    label: 'Haute',
-    className: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 border-red-200 dark:border-red-800',
-    emoji: '🔥'
-  },
-  medium: {
-    label: 'Moyenne',
-    className: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200 border-yellow-200 dark:border-yellow-800',
-    emoji: '⚡'
-  },
-  low: {
-    label: 'Basse',
-    className: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200 border-gray-200 dark:border-gray-700',
-    emoji: '📌'
-  }
-};
-
-export const PriorityBadge = ({ priority, className = '', size = 'sm' }: PriorityBadgeProps) => {
-  const config = PRIORITY_CONFIG[priority];
-  const sizeClass = SIZE_CLASSES[size];
-  
-  return (
-    <Badge 
-      variant="outline"
-      className={`${config.className} ${sizeClass} ${className} flex items-center gap-1 font-medium`}
-    >
-      <span>{config.emoji}</span>
-      <span>{config.label}</span>
-    </Badge>
-  );
-};
-
 // Badge de catégorie
 interface CategoryBadgeProps {
   category: 'development' | 'social' | 'stores' | 'domains';
@@ -162,23 +122,6 @@ export const CategoryBadge = ({ category, className = '', size = 'sm' }: Categor
       <span>{config.emoji}</span>
       <span>{config.label}</span>
     </Badge>
-  );
-};
-
-// Badge combiné avec statut et priorité
-interface CombinedBadgeProps {
-  status: AvailabilityStatus;
-  priority?: 'high' | 'medium' | 'low';
-  className?: string;
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export const CombinedBadge = ({ status, priority, className = '', size = 'sm' }: CombinedBadgeProps) => {
-  return (
-    <div className={`flex items-center gap-1 ${className}`}>
-      <PlatformBadge status={status} size={size} />
-      {priority && <PriorityBadge priority={priority} size={size} />}
-    </div>
   );
 };
 

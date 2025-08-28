@@ -232,8 +232,13 @@ export const createAvailabilityChecker = (): AvailabilityChecker => {
       // Logique spécifique selon l'API
       let isAvailable = false;
       
+      // DockerHub API
+      if (endpoint.includes('hub.docker.com')) {
+        // Pour DockerHub, count: 0 signifie que le nom est disponible
+        isAvailable = data.count === 0;
+      }
       // VS Code Extensions API
-      if (endpoint.includes('marketplace.visualstudio.com')) {
+      else if (endpoint.includes('marketplace.visualstudio.com')) {
         isAvailable = !data.results || data.results.length === 0 || 
                      !data.results[0].extensions || data.results[0].extensions.length === 0;
       } else {

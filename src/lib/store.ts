@@ -65,8 +65,7 @@ interface AppState {
 
 const defaultFilters: SearchFilters = {
   categories: ['development', 'social', 'stores', 'domains'],
-  status: ['available', 'taken', 'error'], // Suppression de 'checking' par défaut
-  priority: ['high', 'medium', 'low']
+  status: ['available', 'taken', 'error'] // Suppression de 'checking' par défaut
 };
 
 const defaultPreferences = {
@@ -169,16 +168,23 @@ export const useAppStore = create<AppState>()(persist(
       const filtered = currentResults.filter(result => {
         const categoryMatch = filters.categories.includes(result.category);
         const statusMatch = filters.status.includes(result.status);
-        const priorityMatch = !result.priority || filters.priority.includes(result.priority);
-        return categoryMatch && statusMatch && priorityMatch;
+        return categoryMatch && statusMatch;
       });
       
-      // Trier par statut : disponibles d'abord, puis pris, puis erreurs
+      // Trier par statut puis par ordre alphabétique :
+      // 1. D'abord les "disponible" par ordre alphabétique
+      // 2. Ensuite les "pris" par ordre alphabétique
+      // 3. Puis les autres statuts par ordre alphabétique
       return filtered.sort((a, b) => {
-        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'error': 2 };
-        // CORRECTION: utiliser !== undefined au lieu de || pour gérer la valeur 0
+        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'checking': 2, 'error': 3 };
         const orderA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 99;
         const orderB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 99;
+        
+        // Si même statut, trier par ordre alphabétique du nom de la plateforme
+        if (orderA === orderB) {
+          return a.platform.localeCompare(b.platform);
+        }
+        
         return orderA - orderB;
       });
     },

@@ -77,7 +77,6 @@ export async function GET(request: NextRequest) {
             name,
             status: 'error',
             error: error instanceof Error ? error.message : 'Erreur inconnue',
-            priority: config.priority,
             lastChecked: Date.now()
           };
           
