@@ -15,7 +15,7 @@ const DEFAULT_DATA: StoredData = {
     maxHistoryItems: 100,
     defaultFilters: {
       categories: ['development', 'social', 'stores', 'domains'],
-      status: ['available', 'taken', 'checking', 'error']
+      status: ['available', 'taken', 'error']
     },
     enabledPlatforms: [
       'github', 'npm', 'twitter', 'instagram', 'domain-com', 'domain-io',

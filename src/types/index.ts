@@ -1,6 +1,6 @@
 // Types principaux pour NameScout
 
-export type AvailabilityStatus = "available" | "taken" | "checking" | "error";
+export type AvailabilityStatus = "available" | "taken" | "error";
 
 export type PlatformCategory = "development" | "social" | "stores" | "domains";
 

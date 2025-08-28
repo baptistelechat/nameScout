@@ -62,7 +62,7 @@ export const checkSinglePlatform = async (
     platform,
     category: config.category,
     name,
-    status: 'checking',
+    status: 'error',
     lastChecked: Date.now()
   };
   
@@ -104,12 +104,12 @@ export const checkAllPlatforms = async (
   const startTime = Date.now();
   const platforms = getAllPlatforms();
   
-  // Initialiser tous les résultats avec le statut 'checking'
+  // Initialiser tous les résultats avec le statut 'error'
   const initialResults = platforms.map(config => ({
     platform: config.type,
     category: config.category,
     name,
-    status: 'checking' as const,
+    status: 'error' as const,
     lastChecked: Date.now()
   }));
   

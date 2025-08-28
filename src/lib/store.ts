@@ -60,7 +60,7 @@ interface AppState {
   
   // Utilitaires
   getFilteredResults: () => PlatformResult[];
-  getSearchStats: () => { total: number; available: number; taken: number; checking: number; error: number };
+  getSearchStats: () => { total: number; available: number; taken: number; error: number };
 }
 
 const defaultFilters: SearchFilters = {
@@ -176,7 +176,7 @@ export const useAppStore = create<AppState>()(persist(
       // 2. Ensuite les "pris" par ordre alphabétique
       // 3. Puis les autres statuts par ordre alphabétique
       return filtered.sort((a, b) => {
-        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'checking': 2, 'error': 3 };
+        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'error': 2 };
         const orderA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 99;
         const orderB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 99;
         
@@ -195,7 +195,6 @@ export const useAppStore = create<AppState>()(persist(
         total: currentResults.length,
         available: currentResults.filter(r => r.status === 'available').length,
         taken: currentResults.filter(r => r.status === 'taken').length,
-        checking: currentResults.filter(r => r.status === 'checking').length,
         error: currentResults.filter(r => r.status === 'error').length
       };
     }

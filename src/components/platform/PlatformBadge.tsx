@@ -25,13 +25,6 @@ const STATUS_BADGE_CONFIG = {
     icon: XCircle,
     iconColor: 'text-red-600'
   },
-  checking: {
-    label: 'Vérification...',
-    variant: 'secondary' as const,
-    className: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 border-blue-200 dark:border-blue-800',
-    icon: Loader2,
-    iconColor: 'text-blue-600'
-  },
   error: {
     label: 'Erreur',
     variant: 'outline' as const,
@@ -72,7 +65,7 @@ export const PlatformBadge = ({
     >
       {showIcon && (
         <IconComponent 
-          className={`${iconSize} ${config.iconColor} ${status === 'checking' ? 'animate-spin' : ''}`} 
+          className={`${iconSize} ${config.iconColor}`} 
         />
       )}
       <span>{config.label}</span>

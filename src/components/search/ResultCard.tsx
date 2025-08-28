@@ -20,8 +20,6 @@ const StatusIcon = ({ status, className = "h-4 w-4" }: { status: string; classNa
       return <CheckCircle className={`${className} text-green-500`} />;
     case 'taken':
       return <XCircle className={`${className} text-red-500`} />;
-    case 'checking':
-      return <Loader2 className={`${className} text-blue-500 animate-spin`} />;
     case 'error':
       return <AlertCircle className={`${className} text-orange-500`} />;
     default:
@@ -40,8 +38,6 @@ export const ResultCard = ({ result, className = '' }: ResultCardProps) => {
         return 'Disponible';
       case 'taken':
         return 'Pris';
-      case 'checking':
-        return 'Vérification...';
       case 'error':
         return 'Erreur';
       default:
@@ -55,8 +51,6 @@ export const ResultCard = ({ result, className = '' }: ResultCardProps) => {
         return 'text-green-600 dark:text-green-400';
       case 'taken':
         return 'text-red-600 dark:text-red-400';
-      case 'checking':
-        return 'text-blue-600 dark:text-blue-400';
       case 'error':
         return 'text-orange-600 dark:text-orange-400';
       default:

@@ -18,12 +18,9 @@ const SearchStats = () => {
       (r) => r.status === "available"
     ).length;
     const taken = currentResults.filter((r) => r.status === "taken").length;
-    const checking = currentResults.filter(
-      (r) => r.status === "checking"
-    ).length;
     const error = currentResults.filter((r) => r.status === "error").length;
 
-    return { total, available, taken, checking, error };
+    return { total, available, taken, error };
   }, [currentResults]);
 
   if (!currentResults.length && !isSearching) return null;
