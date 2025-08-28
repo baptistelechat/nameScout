@@ -29,28 +29,7 @@ const StatusIcon = ({ status, className = "h-4 w-4" }: { status: string; classNa
   }
 };
 
-// Composant pour le badge de priorité
-const PriorityBadge = ({ priority }: { priority?: 'high' | 'medium' | 'low' }) => {
-  if (!priority) return null;
-  
-  const variants = {
-    high: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200',
-    medium: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-    low: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
-  };
-  
-  const labels = {
-    high: 'Priorité haute',
-    medium: 'Priorité moyenne',
-    low: 'Priorité basse'
-  };
-  
-  return (
-    <Badge variant="secondary" className={`text-xs ${variants[priority]}`}>
-      {labels[priority]}
-    </Badge>
-  );
-};
+
 
 export const ResultCard = ({ result, className = '' }: ResultCardProps) => {
   const platformUrl = getPlatformUrl(result.platform, result.name);
@@ -101,7 +80,6 @@ export const ResultCard = ({ result, className = '' }: ResultCardProps) => {
                 <h3 className="font-medium text-sm truncate">
                   {result.platform.charAt(0).toUpperCase() + result.platform.slice(1).replace('-', ' ')}
                 </h3>
-                <PriorityBadge priority={result.priority} />
               </div>
               
               {/* Statut */}

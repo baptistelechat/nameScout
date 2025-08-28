@@ -65,7 +65,7 @@ interface AppState {
 
 const defaultFilters: SearchFilters = {
   categories: ['development', 'social', 'stores', 'domains'],
-  status: ['available', 'taken', 'checking', 'error'],
+  status: ['available', 'taken', 'error'], // Suppression de 'checking' par défaut
   priority: ['high', 'medium', 'low']
 };
 
@@ -166,11 +166,20 @@ export const useAppStore = create<AppState>()(persist(
     // Utilitaires
     getFilteredResults: () => {
       const { currentResults, filters } = get();
-      return currentResults.filter(result => {
+      const filtered = currentResults.filter(result => {
         const categoryMatch = filters.categories.includes(result.category);
         const statusMatch = filters.status.includes(result.status);
         const priorityMatch = !result.priority || filters.priority.includes(result.priority);
         return categoryMatch && statusMatch && priorityMatch;
+      });
+      
+      // Trier par statut : disponibles d'abord, puis pris, puis erreurs
+      return filtered.sort((a, b) => {
+        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'error': 2 };
+        // CORRECTION: utiliser !== undefined au lieu de || pour gérer la valeur 0
+        const orderA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 99;
+        const orderB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 99;
+        return orderA - orderB;
       });
     },
     
