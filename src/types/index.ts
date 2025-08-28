@@ -18,6 +18,22 @@ export type PlatformType =
   | "crates"
   | "dockerhub"
   | "homebrew"
+  // Déploiement/Hosting
+  | "vercel"
+  | "netlify"
+  | "railway"
+  | "render"
+  | "firebase-hosting"
+  | "heroku"
+  | "digitalocean"
+  | "aws-amplify"
+  | "azure-static"
+  | "google-cloud-run"
+  // Registres spécialisés
+  | "deno-land"
+  | "packagist"
+  | "rubygems"
+  | "maven-central"
   // Réseaux sociaux
   | "twitter"
   | "instagram"
@@ -71,7 +87,6 @@ export interface PlatformConfig {
   type: PlatformType;
   category: PlatformCategory;
   name: string;
-  icon: string;
   apiEndpoint?: string;
   checkMethod: CheckMethod;
   rateLimit?: number;

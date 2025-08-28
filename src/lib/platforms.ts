@@ -7,8 +7,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "github",
     category: "development",
     name: "GitHub",
-    icon: "github",
-
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://api.github.com/users/{name}",
@@ -18,8 +16,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "npm",
     category: "development",
     name: "npm",
-    icon: "package",
-
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://registry.npmjs.org/{name}",
@@ -29,8 +25,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "pypi",
     category: "development",
     name: "PyPI",
-    icon: "package",
-
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://pypi.org/pypi/{name}/json",
@@ -40,8 +34,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "crates",
     category: "development",
     name: "crates.io",
-    icon: "package",
-
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://crates.io/api/v1/crates/{name}",
@@ -51,7 +43,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "dockerhub",
     category: "development",
     name: "Docker Hub",
-    icon: "container",
     checkMethod: "api-official",
     timeout: 5000,
     apiEndpoint: "https://hub.docker.com/v2/repositories/{name}",
@@ -61,11 +52,137 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "homebrew",
     category: "development",
     name: "Homebrew",
-    icon: "package",
-
     checkMethod: "status-code",
     timeout: 5000,
     apiEndpoint: "https://formulae.brew.sh/api/formula/{name}.json",
+  },
+
+  // 🚀 Déploiement & Hosting
+  vercel: {
+    type: "vercel",
+    category: "development",
+    name: "Vercel",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://vercel.com/{name}",
+  },
+
+  netlify: {
+    type: "netlify",
+    category: "development",
+    name: "Netlify",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}.netlify.app",
+  },
+
+  railway: {
+    type: "railway",
+    category: "development",
+    name: "Railway",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://railway.app/project/{name}",
+  },
+
+  render: {
+    type: "render",
+    category: "development",
+    name: "Render",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}.onrender.com",
+  },
+
+  "firebase-hosting": {
+    type: "firebase-hosting",
+    category: "development",
+    name: "Firebase Hosting",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}.web.app",
+  },
+
+  heroku: {
+    type: "heroku",
+    category: "development",
+    name: "Heroku",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}.herokuapp.com",
+  },
+
+  digitalocean: {
+    type: "digitalocean",
+    category: "development",
+    name: "DigitalOcean App Platform",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://cloud.digitalocean.com/apps/{name}",
+  },
+
+  "aws-amplify": {
+    type: "aws-amplify",
+    category: "development",
+    name: "AWS Amplify",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}.amplifyapp.com",
+  },
+
+  "azure-static": {
+    type: "azure-static",
+    category: "development",
+    name: "Azure Static Web Apps",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}.azurestaticapps.net",
+  },
+
+  "google-cloud-run": {
+    type: "google-cloud-run",
+    category: "development",
+    name: "Google Cloud Run",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://{name}-run.a.run.app",
+  },
+
+  // 📦 Registres spécialisés
+  "deno-land": {
+    type: "deno-land",
+    category: "development",
+    name: "Deno Land",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://deno.land/x/{name}",
+  },
+
+  packagist: {
+    type: "packagist",
+    category: "development",
+    name: "Packagist",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://packagist.org/packages/{name}",
+  },
+
+  rubygems: {
+    type: "rubygems",
+    category: "development",
+    name: "RubyGems",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://rubygems.org/gems/{name}",
+  },
+
+  "maven-central": {
+    type: "maven-central",
+    category: "development",
+    name: "Maven Central",
+    checkMethod: "status-code",
+    timeout: 5000,
+    apiEndpoint: "https://search.maven.org/artifact/{name}",
   },
 
   // 📱 Réseaux Sociaux
@@ -73,8 +190,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "twitter",
     category: "social",
     name: "Twitter/X",
-    icon: "twitter",
-
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://twitter.com/{name}",
@@ -98,8 +213,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "instagram",
     category: "social",
     name: "Instagram",
-    icon: "instagram",
-
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.instagram.com/{name}",
@@ -123,8 +236,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "facebook",
     category: "social",
     name: "Facebook",
-    icon: "facebook",
-
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.facebook.com/{name}",
@@ -146,8 +257,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "linkedin",
     category: "social",
     name: "LinkedIn",
-    icon: "linkedin",
-
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.linkedin.com/in/{name}",
@@ -161,8 +270,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "tiktok",
     category: "social",
     name: "TikTok",
-    icon: "music",
-
     checkMethod: "content-parsing",
     timeout: 10000,
     apiEndpoint: "https://www.tiktok.com/@{name}",
@@ -176,8 +283,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "youtube",
     category: "social",
     name: "YouTube",
-    icon: "youtube",
-
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://www.youtube.com/@{name}",
@@ -192,8 +297,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "chrome-store",
     category: "stores",
     name: "Chrome Web Store",
-    icon: "chrome",
-
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://chrome.google.com/webstore/search/{name}",
@@ -207,8 +310,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "firefox-addons",
     category: "stores",
     name: "Firefox Add-ons",
-    icon: "firefox",
-
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://addons.mozilla.org/en-US/firefox/search/?q={name}",
@@ -222,8 +323,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "vscode-extensions",
     category: "stores",
     name: "VS Code Extensions",
-    icon: "code",
-
     checkMethod: "api-official",
     timeout: 8000,
     apiEndpoint:
@@ -234,8 +333,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "app-store",
     category: "stores",
     name: "Apple App Store",
-    icon: "smartphone",
-
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://apps.apple.com/search?term={name}",
@@ -249,8 +346,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "play-store",
     category: "stores",
     name: "Google Play Store",
-    icon: "smartphone",
-
     checkMethod: "content-parsing",
     timeout: 8000,
     apiEndpoint: "https://play.google.com/store/search?q={name}",
@@ -265,8 +360,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "domain-com",
     category: "domains",
     name: ".com",
-    icon: "globe",
-
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -275,8 +368,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "domain-net",
     category: "domains",
     name: ".net",
-    icon: "globe",
-
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -285,8 +376,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "domain-org",
     category: "domains",
     name: ".org",
-    icon: "globe",
-
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -295,8 +384,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "domain-io",
     category: "domains",
     name: ".io",
-    icon: "globe",
-
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -305,8 +392,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "domain-dev",
     category: "domains",
     name: ".dev",
-    icon: "globe",
-
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -315,8 +400,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     type: "domain-fr",
     category: "domains",
     name: ".fr",
-    icon: "globe",
-
     checkMethod: "connectivity-test",
     timeout: 3000,
   },
@@ -359,24 +442,4 @@ export const PLATFORM_CATEGORIES = {
     icon: "globe",
     description: "Noms de domaine web",
   },
-} as const;
-
-// Mapping des icônes Lucide React
-export const PLATFORM_ICONS = {
-  github: "Github",
-  package: "Package",
-  container: "Container",
-  twitter: "Twitter",
-  instagram: "Instagram",
-  facebook: "Facebook",
-  linkedin: "Linkedin",
-  music: "Music",
-  youtube: "Youtube",
-  chrome: "Chrome",
-  firefox: "Firefox",
-  code: "Code",
-  smartphone: "Smartphone",
-  globe: "Globe",
-  users: "Users",
-  store: "Store",
 } as const;

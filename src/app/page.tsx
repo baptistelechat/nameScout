@@ -29,7 +29,7 @@ export default function HomePage() {
             NameScout
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Vérifiez la disponibilité de votre nom sur 25+ plateformes en
+            Vérifiez la disponibilité de votre nom sur 30+ plateformes en
             quelques secondes
           </p>
 
