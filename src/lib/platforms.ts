@@ -64,7 +64,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     name: "Vercel",
     checkMethod: "status-code",
     timeout: 5000,
-    apiEndpoint: "https://vercel.com/{name}",
+    apiEndpoint: "https://{name}.vercel.app",
   },
 
   netlify: {
@@ -76,23 +76,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     apiEndpoint: "https://{name}.netlify.app",
   },
 
-  railway: {
-    type: "railway",
-    category: "development",
-    name: "Railway",
-    checkMethod: "status-code",
-    timeout: 5000,
-    apiEndpoint: "https://railway.app/project/{name}",
-  },
 
-  render: {
-    type: "render",
-    category: "development",
-    name: "Render",
-    checkMethod: "status-code",
-    timeout: 5000,
-    apiEndpoint: "https://{name}.onrender.com",
-  },
 
   "firebase-hosting": {
     type: "firebase-hosting",
@@ -112,23 +96,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     apiEndpoint: "https://{name}.herokuapp.com",
   },
 
-  digitalocean: {
-    type: "digitalocean",
-    category: "development",
-    name: "DigitalOcean App Platform",
-    checkMethod: "status-code",
-    timeout: 5000,
-    apiEndpoint: "https://cloud.digitalocean.com/apps/{name}",
-  },
 
-  "aws-amplify": {
-    type: "aws-amplify",
-    category: "development",
-    name: "AWS Amplify",
-    checkMethod: "status-code",
-    timeout: 5000,
-    apiEndpoint: "https://{name}.amplifyapp.com",
-  },
 
   "azure-static": {
     type: "azure-static",
@@ -149,14 +117,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
   },
 
   // 📦 Registres spécialisés
-  "deno-land": {
-    type: "deno-land",
-    category: "development",
-    name: "Deno Land",
-    checkMethod: "status-code",
-    timeout: 5000,
-    apiEndpoint: "https://deno.land/x/{name}",
-  },
 
   packagist: {
     type: "packagist",
@@ -176,14 +136,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     apiEndpoint: "https://rubygems.org/gems/{name}",
   },
 
-  "maven-central": {
-    type: "maven-central",
-    category: "development",
-    name: "Maven Central",
-    checkMethod: "status-code",
-    timeout: 5000,
-    apiEndpoint: "https://search.maven.org/artifact/{name}",
-  },
+
 
   // 📱 Réseaux Sociaux
   twitter: {

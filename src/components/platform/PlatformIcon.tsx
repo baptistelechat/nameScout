@@ -36,20 +36,14 @@ const PLATFORM_ICON_MAP: Record<PlatformType, React.ComponentType<any>> = {
   // Déploiement & Hosting
   vercel: Server,
   netlify: Server,
-  railway: Server,
-  render: Server,
   "firebase-hosting": Server,
   heroku: Server,
-  digitalocean: Server,
-  "aws-amplify": Server,
   "azure-static": Server,
   "google-cloud-run": Server,
 
   // Registres spécialisés
-  "deno-land": Package2,
   packagist: Package2,
   rubygems: Package2,
-  "maven-central": Package2,
 
   // Réseaux sociaux
   twitter: Twitter,
@@ -88,20 +82,14 @@ const PLATFORM_COLORS: Record<PlatformType, string> = {
   // Déploiement & Hosting
   vercel: "text-black dark:text-white",
   netlify: "text-teal-600",
-  railway: "text-purple-600",
-  render: "text-green-600",
   "firebase-hosting": "text-orange-500",
   heroku: "text-purple-700",
-  digitalocean: "text-blue-600",
-  "aws-amplify": "text-orange-600",
   "azure-static": "text-blue-500",
   "google-cloud-run": "text-blue-500",
 
   // Registres spécialisés
-  "deno-land": "text-black dark:text-white",
   packagist: "text-orange-600",
   rubygems: "text-red-600",
-  "maven-central": "text-blue-700",
 
   // Réseaux sociaux
   twitter: "text-blue-400",
@@ -171,20 +159,14 @@ export const PlatformIconWithBackground = ({
     // Déploiement & Hosting
     vercel: "bg-black dark:bg-white",
     netlify: "bg-teal-600",
-    railway: "bg-purple-600",
-    render: "bg-green-600",
     "firebase-hosting": "bg-orange-500",
     heroku: "bg-purple-700",
-    digitalocean: "bg-blue-600",
-    "aws-amplify": "bg-orange-600",
     "azure-static": "bg-blue-500",
     "google-cloud-run": "bg-blue-500",
 
     // Registres spécialisés
-    "deno-land": "bg-black dark:bg-white",
     packagist: "bg-orange-600",
     rubygems: "bg-red-600",
-    "maven-central": "bg-blue-700",
 
     // Réseaux sociaux
     twitter: "bg-blue-400",
