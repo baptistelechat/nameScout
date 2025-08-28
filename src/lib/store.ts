@@ -60,13 +60,12 @@ interface AppState {
   
   // Utilitaires
   getFilteredResults: () => PlatformResult[];
-  getSearchStats: () => { total: number; available: number; taken: number; checking: number; error: number };
+  getSearchStats: () => { total: number; available: number; taken: number; error: number };
 }
 
 const defaultFilters: SearchFilters = {
   categories: ['development', 'social', 'stores', 'domains'],
-  status: ['available', 'taken', 'checking', 'error'],
-  priority: ['high', 'medium', 'low']
+  status: ['available', 'taken', 'error'] // Suppression de 'checking' par défaut
 };
 
 const defaultPreferences = {
@@ -166,11 +165,27 @@ export const useAppStore = create<AppState>()(persist(
     // Utilitaires
     getFilteredResults: () => {
       const { currentResults, filters } = get();
-      return currentResults.filter(result => {
+      const filtered = currentResults.filter(result => {
         const categoryMatch = filters.categories.includes(result.category);
         const statusMatch = filters.status.includes(result.status);
-        const priorityMatch = !result.priority || filters.priority.includes(result.priority);
-        return categoryMatch && statusMatch && priorityMatch;
+        return categoryMatch && statusMatch;
+      });
+      
+      // Trier par statut puis par ordre alphabétique :
+      // 1. D'abord les "disponible" par ordre alphabétique
+      // 2. Ensuite les "pris" par ordre alphabétique
+      // 3. Puis les autres statuts par ordre alphabétique
+      return filtered.sort((a, b) => {
+        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'error': 2 };
+        const orderA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 99;
+        const orderB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 99;
+        
+        // Si même statut, trier par ordre alphabétique du nom de la plateforme
+        if (orderA === orderB) {
+          return a.platform.localeCompare(b.platform);
+        }
+        
+        return orderA - orderB;
       });
     },
     
@@ -180,7 +195,6 @@ export const useAppStore = create<AppState>()(persist(
         total: currentResults.length,
         available: currentResults.filter(r => r.status === 'available').length,
         taken: currentResults.filter(r => r.status === 'taken').length,
-        checking: currentResults.filter(r => r.status === 'checking').length,
         error: currentResults.filter(r => r.status === 'error').length
       };
     }

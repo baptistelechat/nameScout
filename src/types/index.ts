@@ -1,20 +1,53 @@
 // Types principaux pour NameScout
 
-export type AvailabilityStatus = 'available' | 'taken' | 'checking' | 'error';
+export type AvailabilityStatus = "available" | "taken" | "error";
 
-export type PlatformCategory = 'development' | 'social' | 'stores' | 'domains';
+export type PlatformCategory = "development" | "social" | "stores" | "domains";
 
-export type CheckMethod = 'status-code' | 'content-parsing' | 'api-official' | 'connectivity-test';
+export type CheckMethod =
+  | "status-code"
+  | "content-parsing"
+  | "api-official"
+  | "connectivity-test";
 
-export type PlatformType = 
+export type PlatformType =
   // Développement
-  | 'github' | 'npm' | 'pypi' | 'crates' | 'dockerhub' | 'homebrew'
+  | "github"
+  | "npm"
+  | "pypi"
+  | "crates"
+  | "dockerhub"
+  | "homebrew"
+  // Déploiement/Hosting
+  | "vercel"
+  | "netlify"
+  | "firebase-hosting"
+  | "heroku"
+  | "azure-static"
+  | "google-cloud-run"
+  // Registres spécialisés
+  | "packagist"
+  | "rubygems"
   // Réseaux sociaux
-  | 'twitter' | 'instagram' | 'facebook' | 'linkedin' | 'tiktok' | 'youtube'
+  | "twitter"
+  | "instagram"
+  | "facebook"
+  | "linkedin"
+  | "tiktok"
+  | "youtube"
   // Stores
-  | 'chrome-store' | 'firefox-addons' | 'vscode-extensions' | 'app-store' | 'play-store'
+  | "chrome-store"
+  | "firefox-addons"
+  | "vscode-extensions"
+  | "app-store"
+  | "play-store"
   // Domaines
-  | 'domain-com' | 'domain-net' | 'domain-org' | 'domain-io' | 'domain-dev' | 'domain-fr';
+  | "domain-com"
+  | "domain-net"
+  | "domain-org"
+  | "domain-io"
+  | "domain-dev"
+  | "domain-fr";
 
 export interface PlatformResult {
   platform: PlatformType;
@@ -23,7 +56,6 @@ export interface PlatformResult {
   status: AvailabilityStatus;
   url?: string;
   error?: string;
-  priority?: 'high' | 'medium' | 'low';
   lastChecked?: number;
 }
 
@@ -43,15 +75,12 @@ export interface SearchHistory {
 export interface SearchFilters {
   categories: PlatformCategory[];
   status: AvailabilityStatus[];
-  priority: ('high' | 'medium' | 'low')[];
 }
 
 export interface PlatformConfig {
   type: PlatformType;
   category: PlatformCategory;
   name: string;
-  icon: string;
-  priority: 'high' | 'medium' | 'low';
   apiEndpoint?: string;
   checkMethod: CheckMethod;
   rateLimit?: number;
@@ -68,13 +97,19 @@ export interface CheckResult {
   httpStatus?: number;
   responseTime?: number;
   errorMessage?: string;
-  detectedLanguage?: 'fr' | 'en';
+  detectedLanguage?: "fr" | "en";
 }
 
 export interface AvailabilityChecker {
   checkByStatusCode: (url: string) => Promise<CheckResult>;
-  checkByContentParsing: (url: string, errorMessages: string[]) => Promise<CheckResult>;
-  checkByApi: (endpoint: string, params: Record<string, any>) => Promise<CheckResult>;
+  checkByContentParsing: (
+    url: string,
+    errorMessages: string[]
+  ) => Promise<CheckResult>;
+  checkByApi: (
+    endpoint: string,
+    params: Record<string, any>
+  ) => Promise<CheckResult>;
   checkByConnectivity: (domain: string) => Promise<CheckResult>;
 }
 
@@ -83,7 +118,7 @@ export interface StoredData {
   version: string;
   history: SearchHistory;
   preferences: {
-    theme: 'light' | 'dark' | 'system';
+    theme: "light" | "dark" | "system";
     maxHistoryItems: number;
     defaultFilters: SearchFilters;
     enabledPlatforms: PlatformType[];
@@ -95,7 +130,7 @@ export interface StoredData {
 export interface AvailabilityErrorType {
   message: string;
   platform: PlatformType;
-  errorType: 'timeout' | 'cors' | 'rate-limit' | 'parsing' | 'network';
+  errorType: "timeout" | "cors" | "rate-limit" | "parsing" | "network";
   retryable: boolean;
 }
 
@@ -127,7 +162,7 @@ export interface UseHistoryState {
 }
 
 export interface UseThemeState {
-  theme: 'light' | 'dark' | 'system';
-  setTheme: (theme: 'light' | 'dark' | 'system') => void;
-  resolvedTheme: 'light' | 'dark';
+  theme: "light" | "dark" | "system";
+  setTheme: (theme: "light" | "dark" | "system") => void;
+  resolvedTheme: "light" | "dark";
 }
