@@ -53,8 +53,27 @@ export async function GET(request: NextRequest) {
       const chunkPromises = chunk.map(async (config) => {
         try {
           // Appel à l'API route individuelle
+          // Détection automatique de l'URL de base
+          const getBaseUrl = () => {
+            // En production sur Vercel
+            if (process.env.VERCEL_URL) {
+              return `https://${process.env.VERCEL_URL}`;
+            }
+            
+            // URL de production explicite
+            if (process.env.NODE_ENV === 'production') {
+              return 'https://namescout.vercel.app';
+            }
+            
+            // En développement, utiliser l'URL de la requête actuelle
+            const requestUrl = new URL(request.url);
+            return `${requestUrl.protocol}//${requestUrl.host}`;
+          };
+          
+          const baseUrl = getBaseUrl();
+          
           const response = await fetch(
-            `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/check/${config.type}?name=${encodeURIComponent(name)}`,
+            `${baseUrl}/api/check/${config.type}?name=${encodeURIComponent(name)}`,
             {
               method: 'GET',
               headers: {
