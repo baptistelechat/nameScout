@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
-  SearchResult,
   PlatformResult,
   SearchFilters,
   PlatformCategory,
@@ -17,8 +16,7 @@ interface AppState {
   currentResults: PlatformResult[];
   searchError: string | null;
   
-  // Historique des recherches
-  searchHistory: SearchResult[];
+
   
   // Filtres
   filters: SearchFilters;
@@ -28,9 +26,7 @@ interface AppState {
   
   // Préférences
   preferences: {
-    maxHistoryItems: number;
     enabledPlatforms: PlatformType[];
-    autoSaveResults: boolean;
   };
   
   // Actions de recherche
@@ -41,10 +37,7 @@ interface AppState {
   setSearchError: (error: string | null) => void;
   clearCurrentSearch: () => void;
   
-  // Actions d'historique
-  addSearchToHistory: (search: SearchResult) => void;
-  removeSearchFromHistory: (timestamp: number) => void;
-  clearSearchHistory: () => void;
+
   
   // Actions de filtres
   setFilters: (filters: Partial<SearchFilters>) => void;
@@ -69,12 +62,10 @@ const defaultFilters: SearchFilters = {
 };
 
 const defaultPreferences = {
-  maxHistoryItems: 100,
   enabledPlatforms: [
     'github', 'npm', 'domain-com', 'domain-io',
       'pypi', 'crates', 'chrome-store', 'vscode-extensions'
-  ] as PlatformType[],
-  autoSaveResults: true
+  ] as PlatformType[]
 };
 
 export const useAppStore = create<AppState>()(persist(
@@ -84,7 +75,7 @@ export const useAppStore = create<AppState>()(persist(
     isSearching: false,
     currentResults: [],
     searchError: null,
-    searchHistory: [],
+
     filters: defaultFilters,
     theme: 'system',
     preferences: defaultPreferences,
@@ -113,22 +104,7 @@ export const useAppStore = create<AppState>()(persist(
       isSearching: false
     }),
     
-    // Actions d'historique
-    addSearchToHistory: (search: SearchResult) => {
-      const { searchHistory, preferences } = get();
-      const newHistory = [search, ...searchHistory]
-        .slice(0, preferences.maxHistoryItems);
-      set({ searchHistory: newHistory });
-    },
-    
-    removeSearchFromHistory: (timestamp: number) => {
-      const { searchHistory } = get();
-      const newHistory = searchHistory.filter(s => s.timestamp !== timestamp);
-      set({ searchHistory: newHistory });
-    },
-    
-    clearSearchHistory: () => set({ searchHistory: [] }),
-    
+
     // Actions de filtres
     setFilters: (newFilters: Partial<SearchFilters>) => {
       const { filters } = get();
@@ -202,7 +178,6 @@ export const useAppStore = create<AppState>()(persist(
   {
     name: 'namescout-store',
     partialize: (state) => ({
-      searchHistory: state.searchHistory,
       filters: state.filters,
       theme: state.theme,
       preferences: state.preferences

@@ -168,9 +168,7 @@ export const useSearch = () => {
     setIsSearching,
     setCurrentResults,
     updatePlatformResult,
-    addSearchToHistory,
-    setSearchError,
-    preferences
+    setSearchError
   } = useAppStore();
   
   const performSearch = async (name: string) => {
@@ -209,10 +207,7 @@ export const useSearch = () => {
         }
       );
       
-      // Sauvegarder dans l'historique si activé
-      if (preferences.autoSaveResults) {
-        addSearchToHistory(searchResult);
-      }
+
       
     } catch (error) {
       setSearchError(

@@ -17,14 +17,23 @@ export const Layout = ({ children }: LayoutProps) => {
           <div className="container mx-auto px-4 py-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <span>© 2024 NameScout</span>
+                <span>© NameScout</span>
                 <span>•</span>
-                <span>Fait avec ❤️ pour les développeurs</span>
+                <span>Fait par Baptiste LECHAT avec ❤️ pour les développeurs</span>
               </div>
               
               <div className="flex items-center space-x-4 text-sm text-muted-foreground">
                 <a 
-                  href="https://github.com" 
+                  href="https://x.com/baptiste_lechat" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-foreground transition-colors"
+                >
+                  X (Twitter)
+                </a>
+                <span>•</span>
+                <a 
+                  href="https://github.com/baptistelechat/nameScout" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="hover:text-foreground transition-colors"

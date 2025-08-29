@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Loader2 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
+import { getAllPlatforms } from '@/lib/platforms';
 
 export const SearchForm = () => {
   const [inputValue, setInputValue] = useState('');
@@ -12,12 +13,11 @@ export const SearchForm = () => {
   const {
     setIsSearching,
     setCurrentResults,
-    updatePlatformResult,
-    addSearchToHistory,
     setSearchError,
-    preferences,
     isSearching
   } = useAppStore();
+
+  const platformCount = getAllPlatforms().length;
 
   const performSearch = async (name: string) => {
     if (!name.trim()) {
@@ -63,10 +63,7 @@ export const SearchForm = () => {
       // Mettre à jour directement tous les résultats
       setCurrentResults(searchResult.results);
       
-      // Sauvegarder dans l'historique si activé
-      if (preferences.autoSaveResults) {
-        addSearchToHistory(searchResult);
-      }
+
       
     } catch (error) {
       setSearchError(
@@ -160,7 +157,7 @@ export const SearchForm = () => {
         
         {!inputValue && (
           <p className="text-muted-foreground">
-            Vérifiez la disponibilité d'un nom sur 25+ plateformes : GitHub, npm, réseaux sociaux, domaines...
+            Vérifiez la disponibilité d'un nom sur {platformCount}+ plateformes : GitHub, npm, réseaux sociaux, domaines...
           </p>
         )}
       </div>

@@ -7,10 +7,12 @@ import { SearchForm } from "@/components/search/SearchForm";
 import { StatusFilter } from "@/components/search/StatusFilter";
 import { Card, CardContent } from "@/components/ui/card";
 import { useAppStore } from "@/lib/store";
-import { Clock, Search, Shield, Zap } from "lucide-react";
+import { getAllPlatforms } from "@/lib/platforms";
+import { Search, Shield, Zap } from "lucide-react";
 
 export default function HomePage() {
   const { currentResults, isSearching } = useAppStore();
+  const platformCount = getAllPlatforms().length;
 
   return (
     <Layout>
@@ -29,7 +31,7 @@ export default function HomePage() {
             NameScout
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Vérifiez la disponibilité de votre nom sur 30+ plateformes en
+            Vérifiez la disponibilité de votre nom sur {platformCount}+ plateformes en
             quelques secondes
           </p>
 
@@ -63,11 +65,11 @@ export default function HomePage() {
             <Card className="border-0 shadow-sm">
               <CardContent className="pt-6">
                 <div className="flex items-center justify-center mb-4">
-                  <Clock className="h-8 w-8 text-primary" />
+                  <Search className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold mb-2">Historique local</h3>
+                <h3 className="font-semibold mb-2">Résultats instantanés</h3>
                 <p className="text-sm text-muted-foreground">
-                  Consultez vos recherches précédentes à tout moment
+                  Obtenez des résultats en temps réel pour tous vos projets
                 </p>
               </CardContent>
             </Card>

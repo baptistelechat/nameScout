@@ -61,9 +61,7 @@ export interface SearchResult {
   takenCount: number;
 }
 
-export interface SearchHistory {
-  searches: SearchResult[];
-}
+
 
 export interface SearchFilters {
   categories: PlatformCategory[];
@@ -106,18 +104,7 @@ export interface AvailabilityChecker {
   checkByConnectivity: (domain: string) => Promise<CheckResult>;
 }
 
-// Types pour le localStorage
-export interface StoredData {
-  version: string;
-  history: SearchHistory;
-  preferences: {
-    theme: "light" | "dark" | "system";
-    maxHistoryItems: number;
-    defaultFilters: SearchFilters;
-    enabledPlatforms: PlatformType[];
-    autoSaveResults: boolean;
-  };
-}
+
 
 // Types pour les erreurs
 export interface AvailabilityErrorType {
@@ -147,12 +134,7 @@ export interface UseFiltersState {
   filteredResults: PlatformResult[];
 }
 
-export interface UseHistoryState {
-  history: SearchResult[];
-  addSearch: (search: SearchResult) => void;
-  clearHistory: () => void;
-  removeSearch: (timestamp: number) => void;
-}
+
 
 export interface UseThemeState {
   theme: "light" | "dark" | "system";
