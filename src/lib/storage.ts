@@ -14,7 +14,7 @@ const DEFAULT_DATA: StoredData = {
     theme: 'system',
     maxHistoryItems: 100,
     defaultFilters: {
-      categories: ['development', 'stores', 'domains'],
+      categories: ['development', 'domains', 'stores'],
       status: ['available', 'taken', 'error']
     },
     enabledPlatforms: [

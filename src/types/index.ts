@@ -2,7 +2,7 @@
 
 export type AvailabilityStatus = "available" | "taken" | "error";
 
-export type PlatformCategory = "development" | "stores" | "domains";
+export type PlatformCategory = "development" | "domains" | "stores";
 
 export type CheckMethod =
   | "status-code"

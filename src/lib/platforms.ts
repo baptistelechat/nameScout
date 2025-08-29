@@ -76,8 +76,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     apiEndpoint: "https://{name}.netlify.app",
   },
 
-
-
   "firebase-hosting": {
     type: "firebase-hosting",
     category: "development",
@@ -95,8 +93,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     timeout: 5000,
     apiEndpoint: "https://{name}.herokuapp.com",
   },
-
-
 
   "azure-static": {
     type: "azure-static",
@@ -135,10 +131,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     timeout: 5000,
     apiEndpoint: "https://rubygems.org/api/v1/gems/{name}.json",
   },
-
-
-
-
 
   // 🏪 Stores & Extensions
   "chrome-store": {
@@ -275,15 +267,14 @@ export const PLATFORM_CATEGORIES = {
     icon: "code",
     description: "Plateformes de développement et packages",
   },
-
-  stores: {
-    name: "Stores & Extensions",
-    icon: "store",
-    description: "Magasins d'applications et extensions",
-  },
   domains: {
     name: "Domaines",
     icon: "globe",
     description: "Noms de domaine web",
+  },
+  stores: {
+    name: "Stores & Extensions",
+    icon: "store",
+    description: "Magasins d'applications et extensions",
   },
 } as const;

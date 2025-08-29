@@ -75,7 +75,7 @@ export const PlatformBadge = ({
 
 // Badge de catégorie
 interface CategoryBadgeProps {
-  category: 'development' | 'stores' | 'domains';
+  category: 'development' | 'domains' | 'stores';
   className?: string;
   size?: 'sm' | 'md' | 'lg';
 }

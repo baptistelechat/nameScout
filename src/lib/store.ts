@@ -64,7 +64,7 @@ interface AppState {
 }
 
 const defaultFilters: SearchFilters = {
-  categories: ['development', 'stores', 'domains'],
+  categories: ['development', 'domains', 'stores'],
   status: ['available', 'taken', 'error'] // Suppression de 'checking' par défaut
 };
 
