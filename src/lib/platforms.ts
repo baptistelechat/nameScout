@@ -124,7 +124,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     name: "Packagist",
     checkMethod: "status-code",
     timeout: 5000,
-    apiEndpoint: "https://packagist.org/packages/{name}",
+    apiEndpoint: "https://repo.packagist.org/p2/{name}.json",
   },
 
   rubygems: {
@@ -133,7 +133,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     name: "RubyGems",
     checkMethod: "status-code",
     timeout: 5000,
-    apiEndpoint: "https://rubygems.org/gems/{name}",
+    apiEndpoint: "https://rubygems.org/api/v1/gems/{name}.json",
   },
 
 
