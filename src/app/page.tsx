@@ -6,8 +6,8 @@ import { ResultGrid } from "@/components/search/ResultGrid";
 import { SearchForm } from "@/components/search/SearchForm";
 import { StatusFilter } from "@/components/search/StatusFilter";
 import { Card, CardContent } from "@/components/ui/card";
-import { useAppStore } from "@/lib/store";
 import { getAllPlatforms } from "@/lib/platforms";
+import { useAppStore } from "@/lib/store";
 import { Search, Shield, Zap } from "lucide-react";
 
 export default function HomePage() {
@@ -31,8 +31,8 @@ export default function HomePage() {
             NameScout
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Vérifiez la disponibilité de votre nom sur {platformCount}+ plateformes en
-            quelques secondes
+            Vérifiez la disponibilité de votre nom sur {platformCount}+
+            plateformes en quelques secondes
           </p>
 
           {/* Features */}
