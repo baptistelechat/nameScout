@@ -14,12 +14,12 @@ const DEFAULT_DATA: StoredData = {
     theme: 'system',
     maxHistoryItems: 100,
     defaultFilters: {
-      categories: ['development', 'social', 'stores', 'domains'],
+      categories: ['development', 'domains', 'stores'],
       status: ['available', 'taken', 'error']
     },
     enabledPlatforms: [
-      'github', 'npm', 'twitter', 'instagram', 'domain-com', 'domain-io',
-      'pypi', 'crates', 'youtube', 'linkedin', 'chrome-store', 'vscode-extensions'
+      'github', 'npm', 'domain-com', 'domain-io',
+      'pypi', 'crates', 'chrome-store', 'vscode-extensions'
     ],
     autoSaveResults: true
   }

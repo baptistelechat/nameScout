@@ -241,12 +241,7 @@ export const getPlatformUrl = (platform: PlatformType, name: string): string | u
       return `https://www.npmjs.com/package/${name}`;
     case 'pypi':
       return `https://pypi.org/project/${name}/`;
-    case 'twitter':
-      return `https://twitter.com/${name}`;
-    case 'instagram':
-      return `https://www.instagram.com/${name}`;
-    case 'youtube':
-      return `https://www.youtube.com/@${name}`;
+
     default:
       return config.apiEndpoint.replace('{name}', name);
   }

@@ -76,8 +76,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     apiEndpoint: "https://{name}.netlify.app",
   },
 
-
-
   "firebase-hosting": {
     type: "firebase-hosting",
     category: "development",
@@ -95,8 +93,6 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     timeout: 5000,
     apiEndpoint: "https://{name}.herokuapp.com",
   },
-
-
 
   "azure-static": {
     type: "azure-static",
@@ -124,7 +120,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     name: "Packagist",
     checkMethod: "status-code",
     timeout: 5000,
-    apiEndpoint: "https://packagist.org/packages/{name}",
+    apiEndpoint: "https://repo.packagist.org/p2/{name}.json",
   },
 
   rubygems: {
@@ -133,116 +129,7 @@ export const PLATFORM_CONFIGS: Record<PlatformType, PlatformConfig> = {
     name: "RubyGems",
     checkMethod: "status-code",
     timeout: 5000,
-    apiEndpoint: "https://rubygems.org/gems/{name}",
-  },
-
-
-
-  // 📱 Réseaux Sociaux
-  twitter: {
-    type: "twitter",
-    category: "social",
-    name: "Twitter/X",
-    checkMethod: "content-parsing",
-    timeout: 10000,
-    apiEndpoint: "https://twitter.com/{name}",
-    errorMessages: {
-      fr: [
-        "Ce compte n'existe pas",
-        "Compte suspendu",
-        "Utilisateur introuvable",
-        "Page introuvable",
-      ],
-      en: [
-        "This account doesn't exist",
-        "Account suspended",
-        "User not found",
-        "Page not found",
-      ],
-    },
-  },
-
-  instagram: {
-    type: "instagram",
-    category: "social",
-    name: "Instagram",
-    checkMethod: "content-parsing",
-    timeout: 10000,
-    apiEndpoint: "https://www.instagram.com/{name}",
-    errorMessages: {
-      fr: [
-        "Page introuvable",
-        "Utilisateur introuvable",
-        "Contenu indisponible",
-        "Cette page n'est pas disponible",
-      ],
-      en: [
-        "Page not found",
-        "User not found",
-        "Content not available",
-        "This page isn't available",
-      ],
-    },
-  },
-
-  facebook: {
-    type: "facebook",
-    category: "social",
-    name: "Facebook",
-    checkMethod: "content-parsing",
-    timeout: 10000,
-    apiEndpoint: "https://www.facebook.com/{name}",
-    errorMessages: {
-      fr: [
-        "Page introuvable",
-        "Contenu indisponible",
-        "Cette page n'existe pas",
-      ],
-      en: [
-        "Page not found",
-        "Content not available",
-        "This page doesn't exist",
-      ],
-    },
-  },
-
-  linkedin: {
-    type: "linkedin",
-    category: "social",
-    name: "LinkedIn",
-    checkMethod: "content-parsing",
-    timeout: 10000,
-    apiEndpoint: "https://www.linkedin.com/in/{name}",
-    errorMessages: {
-      fr: ["Profil introuvable", "Membre introuvable", "Page introuvable"],
-      en: ["Profile not found", "Member not found", "Page not found"],
-    },
-  },
-
-  tiktok: {
-    type: "tiktok",
-    category: "social",
-    name: "TikTok",
-    checkMethod: "content-parsing",
-    timeout: 10000,
-    apiEndpoint: "https://www.tiktok.com/@{name}",
-    errorMessages: {
-      fr: ["Utilisateur introuvable", "Compte privé", "Page introuvable"],
-      en: ["User not found", "Private account", "Page not found"],
-    },
-  },
-
-  youtube: {
-    type: "youtube",
-    category: "social",
-    name: "YouTube",
-    checkMethod: "content-parsing",
-    timeout: 8000,
-    apiEndpoint: "https://www.youtube.com/@{name}",
-    errorMessages: {
-      fr: ["Chaîne introuvable", "Cette chaîne n'existe pas"],
-      en: ["Channel not found", "This channel doesn't exist"],
-    },
+    apiEndpoint: "https://rubygems.org/api/v1/gems/{name}.json",
   },
 
   // 🏪 Stores & Extensions
@@ -380,19 +267,14 @@ export const PLATFORM_CATEGORIES = {
     icon: "code",
     description: "Plateformes de développement et packages",
   },
-  social: {
-    name: "Réseaux Sociaux",
-    icon: "users",
-    description: "Réseaux sociaux et plateformes communautaires",
+  domains: {
+    name: "Domaines",
+    icon: "globe",
+    description: "Noms de domaine web",
   },
   stores: {
     name: "Stores & Extensions",
     icon: "store",
     description: "Magasins d'applications et extensions",
-  },
-  domains: {
-    name: "Domaines",
-    icon: "globe",
-    description: "Noms de domaine web",
   },
 } as const;

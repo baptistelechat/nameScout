@@ -75,7 +75,7 @@ export const PlatformBadge = ({
 
 // Badge de catégorie
 interface CategoryBadgeProps {
-  category: 'development' | 'social' | 'stores' | 'domains';
+  category: 'development' | 'domains' | 'stores';
   className?: string;
   size?: 'sm' | 'md' | 'lg';
 }
@@ -86,11 +86,7 @@ const CATEGORY_CONFIG = {
     className: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 border-blue-200 dark:border-blue-800',
     emoji: '🔧'
   },
-  social: {
-    label: 'Social',
-    className: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200 border-purple-200 dark:border-purple-800',
-    emoji: '📱'
-  },
+
   stores: {
     label: 'Store',
     className: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 border-green-200 dark:border-green-800',

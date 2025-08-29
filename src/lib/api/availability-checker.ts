@@ -14,15 +14,80 @@ export class AvailabilityError extends Error {
   }
 }
 
-// Fonction utilitaire pour détecter la langue
-const detectLanguage = (text: string): 'fr' | 'en' => {
-  const frWords = ['compte', 'utilisateur', 'page', 'introuvable', 'suspendu', 'indisponible'];
-  const enWords = ['account', 'user', 'page', 'found', 'suspended', 'available'];
+// Détection de la langue du contenu
+const detectLanguage = (text: string): "fr" | "en" => {
+  const frenchWords = ['le', 'la', 'les', 'de', 'du', 'des', 'et', 'ou', 'mais', 'donc', 'car', 'ni', 'or'];
+  const englishWords = ['the', 'and', 'or', 'but', 'so', 'for', 'nor', 'yet', 'a', 'an', 'in', 'on', 'at'];
   
-  const frCount = frWords.filter(word => text.toLowerCase().includes(word)).length;
-  const enCount = enWords.filter(word => text.toLowerCase().includes(word)).length;
+  const lowerText = text.toLowerCase();
   
-  return frCount > enCount ? 'fr' : 'en';
+  let frenchScore = 0;
+  let englishScore = 0;
+  
+  frenchWords.forEach(word => {
+    if (lowerText.includes(word)) frenchScore++;
+  });
+  
+  englishWords.forEach(word => {
+    if (lowerText.includes(word)) englishScore++;
+  });
+  
+  return frenchScore > englishScore ? 'fr' : 'en';
+};
+
+// Détection des pages de parking/vente de domaines
+const isDomainParkingPage = (content: string, url: string): boolean => {
+  const lowerContent = content.toLowerCase();
+  const lowerUrl = url.toLowerCase();
+  
+  // Mots-clés indiquant une page de parking/vente
+  const parkingKeywords = [
+    // Anglais
+    'domain for sale', 'buy this domain', 'domain available', 'domain is for sale',
+    'parking page', 'domain parking', 'parked domain', 'domain parked',
+    'register this domain', 'purchase this domain', 'acquire this domain',
+    'domain marketplace', 'premium domain', 'expired domain',
+    'this domain may be for sale', 'inquire about this domain',
+    'make an offer', 'domain auction', 'buy now',
+    
+    // Français
+    'domaine à vendre', 'ce domaine est à vendre', 'domaine disponible',
+    'acheter ce domaine', 'page de parking', 'domaine parqué',
+    'enregistrer ce domaine', 'acquérir ce domaine', 'domaine premium',
+    'faire une offre', 'vente aux enchères', 'acheter maintenant'
+  ];
+  
+  // Registrars et services de parking connus
+  const registrarKeywords = [
+    'godaddy', 'namecheap', 'sedo', 'afternic', 'hugedomains',
+    'dan.com', 'undeveloped.com', 'parkingcrew', 'domainmarket',
+    'flippa', 'brandpa', 'squadhelp', 'brandroot', 'namerific',
+    'ovh', 'gandi', 'ionos', '1and1', 'hostinger'
+  ];
+  
+  // Vérifier les mots-clés de parking
+  const hasParkingKeywords = parkingKeywords.some(keyword => 
+    lowerContent.includes(keyword)
+  );
+  
+  // Vérifier les noms de registrars
+  const hasRegistrarKeywords = registrarKeywords.some(registrar => 
+    lowerContent.includes(registrar) || lowerUrl.includes(registrar)
+  );
+  
+  // Vérifier les patterns HTML typiques des pages de parking
+  const hasParkingPatterns = [
+    /<title[^>]*>.*(?:for sale|à vendre|parking|parked).*<\/title>/i,
+    /class=["'].*(?:parking|forsale|domain-sale).*["']/i,
+    /id=["'].*(?:parking|forsale|domain-sale).*["']/i
+  ].some(pattern => pattern.test(content));
+  
+  // Détecter les redirections vers des services de parking
+  const hasRedirectToParking = [
+    'sedoparking', 'parkingcrew', 'domainmarket', 'hugedomains'
+  ].some(service => lowerUrl.includes(service));
+  
+  return hasParkingKeywords || hasRegistrarKeywords || hasParkingPatterns || hasRedirectToParking;
 };
 
 // Fonction pour détecter les erreurs CORS
@@ -55,7 +120,7 @@ export const handleCheckError = (
   // Gestion spécifique des erreurs CORS
   if (isCorsError(error)) {
     const isDomainCheck = platform.startsWith('domain-');
-    const isSocialMedia = ['twitter', 'instagram', 'facebook', 'linkedin', 'youtube', 'tiktok'].includes(platform);
+    const isSocialMedia = false; // Plus de réseaux sociaux supportés
     
     // Pour les domaines, une erreur réseau peut indiquer que le domaine est disponible
     if (isDomainCheck) {
@@ -67,13 +132,11 @@ export const handleCheckError = (
       };
     }
     
-    // Pour les réseaux sociaux et autres plateformes, on retourne un statut d'erreur mais informatif
+    // Pour les autres plateformes, on retourne un statut d'erreur mais informatif
     return {
       status: 'error',
       method: PLATFORM_CONFIGS[platform].checkMethod,
-      errorMessage: isSocialMedia 
-        ? 'Vérification bloquée par CORS (politique de sécurité)'
-        : 'Accès bloqué par la plateforme (CORS)',
+      errorMessage: 'Accès bloqué par la plateforme (CORS)',
       responseTime: 0
     };
   }
@@ -264,21 +327,57 @@ export const createAvailabilityChecker = (): AvailabilityChecker => {
 
   const checkByConnectivity = async (domain: string): Promise<CheckResult> => {
     const startTime = Date.now();
+    const url = `https://${domain}`;
+    
     try {
-      const response = await fetch(`https://${domain}`, {
-        method: 'HEAD',
-        signal: AbortSignal.timeout(3000),
+      // Faire une requête GET complète pour analyser le contenu
+      const response = await fetch(url, {
+        method: 'GET',
+        signal: AbortSignal.timeout(5000),
         headers: {
-          'User-Agent': 'NameScout/1.0.0 (Availability Checker)'
-        }
+          'User-Agent': 'NameScout/1.0.0 (Availability Checker)',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        },
+        // Suivre les redirections pour détecter les services de parking
+        redirect: 'follow'
       });
       
+      // Si la réponse n'est pas OK, considérer le domaine comme disponible
+      if (!response.ok) {
+        return {
+          status: 'available',
+          method: 'connectivity-test',
+          httpStatus: response.status,
+          responseTime: Date.now() - startTime,
+          errorMessage: `HTTP ${response.status}: ${response.statusText}`
+        };
+      }
+      
+      // Analyser le contenu pour détecter les pages de parking
+      const content = await response.text();
+      const finalUrl = response.url; // URL finale après redirections
+      
+      // Vérifier si c'est une page de parking/vente
+      const isParkingPage = isDomainParkingPage(content, finalUrl);
+      
+      if (isParkingPage) {
+        return {
+          status: 'available',
+          method: 'connectivity-test',
+          httpStatus: response.status,
+          responseTime: Date.now() - startTime,
+          errorMessage: 'Page de parking/vente détectée - domaine disponible'
+        };
+      }
+      
+      // Si ce n'est pas une page de parking, le domaine est probablement pris
       return {
         status: 'taken',
         method: 'connectivity-test',
         httpStatus: response.status,
         responseTime: Date.now() - startTime
       };
+      
     } catch (error) {
       // Pour les domaines, une erreur réseau indique généralement que le domaine est disponible
       const errorResult = handleCheckError(error, 'domain-com');

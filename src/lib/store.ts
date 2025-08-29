@@ -64,15 +64,15 @@ interface AppState {
 }
 
 const defaultFilters: SearchFilters = {
-  categories: ['development', 'social', 'stores', 'domains'],
+  categories: ['development', 'domains', 'stores'],
   status: ['available', 'taken', 'error'] // Suppression de 'checking' par défaut
 };
 
 const defaultPreferences = {
   maxHistoryItems: 100,
   enabledPlatforms: [
-    'github', 'npm', 'twitter', 'instagram', 'domain-com', 'domain-io',
-    'pypi', 'crates', 'youtube', 'linkedin', 'chrome-store', 'vscode-extensions'
+    'github', 'npm', 'domain-com', 'domain-io',
+      'pypi', 'crates', 'chrome-store', 'vscode-extensions'
   ] as PlatformType[],
   autoSaveResults: true
 };

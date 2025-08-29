@@ -1,20 +1,14 @@
 import type { PlatformType } from "@/types";
 import {
   Container,
-  Facebook,
   Github,
   Globe,
   Hash,
-  Instagram,
-  Linkedin,
-  Music,
   Package,
   Package2,
   Puzzle,
   Server,
   Store,
-  Twitter,
-  Youtube,
 } from "lucide-react";
 
 interface PlatformIconProps {
@@ -45,13 +39,7 @@ const PLATFORM_ICON_MAP: Record<PlatformType, React.ComponentType<any>> = {
   packagist: Package2,
   rubygems: Package2,
 
-  // Réseaux sociaux
-  twitter: Twitter,
-  instagram: Instagram,
-  facebook: Facebook,
-  linkedin: Linkedin,
-  tiktok: Music,
-  youtube: Youtube,
+
 
   // Stores
   "chrome-store": Puzzle,
@@ -91,13 +79,7 @@ const PLATFORM_COLORS: Record<PlatformType, string> = {
   packagist: "text-orange-600",
   rubygems: "text-red-600",
 
-  // Réseaux sociaux
-  twitter: "text-blue-400",
-  instagram: "text-pink-500",
-  facebook: "text-blue-600",
-  linkedin: "text-blue-700",
-  tiktok: "text-black dark:text-white",
-  youtube: "text-red-600",
+
 
   // Stores
   "chrome-store": "text-green-600",
@@ -168,13 +150,7 @@ export const PlatformIconWithBackground = ({
     packagist: "bg-orange-600",
     rubygems: "bg-red-600",
 
-    // Réseaux sociaux
-    twitter: "bg-blue-400",
-    instagram: "bg-gradient-to-r from-purple-500 to-pink-500",
-    facebook: "bg-blue-600",
-    linkedin: "bg-blue-700",
-    tiktok: "bg-black dark:bg-white",
-    youtube: "bg-red-600",
+
 
     // Stores
     "chrome-store": "bg-green-600",
