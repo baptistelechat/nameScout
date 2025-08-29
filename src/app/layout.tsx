@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 
@@ -29,6 +30,13 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <Script
+          defer
+          src="https://cloud.umami.is/script.js"
+          data-website-id="c5beba87-2dd6-4c89-ad77-b6d9bc9a2712"
+          data-domains="namescout.vercel.app"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
