@@ -15,10 +15,9 @@ export default function AboutPage() {
   ];
 
   const platforms = [
-    { category: 'Développement', count: 6, examples: ['GitHub', 'npm', 'PyPI', 'crates.io'] },
-    { category: 'Réseaux Sociaux', count: 6, examples: ['Twitter/X', 'Instagram', 'LinkedIn', 'YouTube'] },
+    { category: 'Développement', count: 8, examples: ['GitHub', 'npm', 'PyPI', 'crates.io'] },
     { category: 'Stores & Extensions', count: 5, examples: ['Chrome Store', 'VS Code', 'App Store'] },
-    { category: 'Domaines Web', count: 8, examples: ['.com', '.io', '.dev', '.fr'] }
+    { category: 'Domaines Web', count: 6, examples: ['.com', '.io', '.dev', '.fr'] }
   ];
 
   return (
@@ -28,7 +27,7 @@ export default function AboutPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">À propos de NameScout</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Un outil moderne et gratuit pour vérifier la disponibilité de noms sur plus de 25 plateformes
+            Un outil moderne et gratuit pour vérifier la disponibilité de noms sur plus de 19 plateformes
           </p>
         </div>
 
@@ -49,8 +48,7 @@ export default function AboutPage() {
               </p>
               <p>
                 L'application vérifie la disponibilité sur les plateformes de développement (GitHub, npm, PyPI), 
-                les réseaux sociaux (Twitter, Instagram, LinkedIn), les stores d'applications, et les domaines web 
-                les plus populaires.
+                les stores d'applications, et les domaines web les plus populaires.
               </p>
             </CardContent>
           </Card>
@@ -63,7 +61,7 @@ export default function AboutPage() {
                 Plateformes supportées
               </CardTitle>
               <CardDescription>
-                Plus de 25 plateformes organisées par catégories
+                Plus de 19 plateformes organisées par catégories
               </CardDescription>
             </CardHeader>
             <CardContent>

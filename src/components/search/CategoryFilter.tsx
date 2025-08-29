@@ -44,7 +44,7 @@ export const CategoryFilter = () => {
   const getCategoryIcon = (category: PlatformCategory) => {
     const icons = {
       development: '🔧',
-      social: '📱',
+  
       stores: '🏪',
       domains: '🌐'
     };

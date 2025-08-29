@@ -55,7 +55,7 @@ export const handleCheckError = (
   // Gestion spécifique des erreurs CORS
   if (isCorsError(error)) {
     const isDomainCheck = platform.startsWith('domain-');
-    const isSocialMedia = ['twitter', 'instagram', 'facebook', 'linkedin', 'youtube', 'tiktok'].includes(platform);
+    const isSocialMedia = false; // Plus de réseaux sociaux supportés
     
     // Pour les domaines, une erreur réseau peut indiquer que le domaine est disponible
     if (isDomainCheck) {
@@ -67,13 +67,11 @@ export const handleCheckError = (
       };
     }
     
-    // Pour les réseaux sociaux et autres plateformes, on retourne un statut d'erreur mais informatif
+    // Pour les autres plateformes, on retourne un statut d'erreur mais informatif
     return {
       status: 'error',
       method: PLATFORM_CONFIGS[platform].checkMethod,
-      errorMessage: isSocialMedia 
-        ? 'Vérification bloquée par CORS (politique de sécurité)'
-        : 'Accès bloqué par la plateforme (CORS)',
+      errorMessage: 'Accès bloqué par la plateforme (CORS)',
       responseTime: 0
     };
   }

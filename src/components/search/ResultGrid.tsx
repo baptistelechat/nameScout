@@ -161,7 +161,7 @@ export const ResultGrid = () => {
   const resultsByCategory = useMemo(() => {
     const grouped: Record<PlatformCategory, PlatformResult[]> = {
       development: [],
-      social: [],
+  
       stores: [],
       domains: [],
     };

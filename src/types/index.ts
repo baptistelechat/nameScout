@@ -2,7 +2,7 @@
 
 export type AvailabilityStatus = "available" | "taken" | "error";
 
-export type PlatformCategory = "development" | "social" | "stores" | "domains";
+export type PlatformCategory = "development" | "stores" | "domains";
 
 export type CheckMethod =
   | "status-code"
@@ -28,13 +28,6 @@ export type PlatformType =
   // Registres spécialisés
   | "packagist"
   | "rubygems"
-  // Réseaux sociaux
-  | "twitter"
-  | "instagram"
-  | "facebook"
-  | "linkedin"
-  | "tiktok"
-  | "youtube"
   // Stores
   | "chrome-store"
   | "firefox-addons"
