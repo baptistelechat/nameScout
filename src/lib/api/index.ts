@@ -62,8 +62,7 @@ export const checkSinglePlatform = async (
     platform,
     category: config.category,
     name,
-    status: 'checking',
-    priority: config.priority,
+    status: 'error',
     lastChecked: Date.now()
   };
   
@@ -105,13 +104,12 @@ export const checkAllPlatforms = async (
   const startTime = Date.now();
   const platforms = getAllPlatforms();
   
-  // Initialiser tous les résultats avec le statut 'checking'
+  // Initialiser tous les résultats avec le statut 'error'
   const initialResults = platforms.map(config => ({
     platform: config.type,
     category: config.category,
     name,
-    status: 'checking' as const,
-    priority: config.priority,
+    status: 'error' as const,
     lastChecked: Date.now()
   }));
   
@@ -170,9 +168,7 @@ export const useSearch = () => {
     setIsSearching,
     setCurrentResults,
     updatePlatformResult,
-    addSearchToHistory,
-    setSearchError,
-    preferences
+    setSearchError
   } = useAppStore();
   
   const performSearch = async (name: string) => {
@@ -211,10 +207,7 @@ export const useSearch = () => {
         }
       );
       
-      // Sauvegarder dans l'historique si activé
-      if (preferences.autoSaveResults) {
-        addSearchToHistory(searchResult);
-      }
+
       
     } catch (error) {
       setSearchError(
@@ -243,12 +236,7 @@ export const getPlatformUrl = (platform: PlatformType, name: string): string | u
       return `https://www.npmjs.com/package/${name}`;
     case 'pypi':
       return `https://pypi.org/project/${name}/`;
-    case 'twitter':
-      return `https://twitter.com/${name}`;
-    case 'instagram':
-      return `https://www.instagram.com/${name}`;
-    case 'youtube':
-      return `https://www.youtube.com/@${name}`;
+
     default:
       return config.apiEndpoint.replace('{name}', name);
   }
@@ -268,12 +256,11 @@ export const exportResults = (searchResult: SearchResult, format: 'json' | 'csv'
     
     URL.revokeObjectURL(url);
   } else if (format === 'csv') {
-    const headers = ['Platform', 'Category', 'Status', 'Priority', 'URL', 'Error'];
+    const headers = ['Platform', 'Category', 'Status', 'URL', 'Error'];
     const rows = searchResult.results.map(result => [
       result.platform,
       result.category,
       result.status,
-      result.priority || '',
       result.url || '',
       result.error || ''
     ]);

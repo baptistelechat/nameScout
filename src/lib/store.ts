@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type {
-  SearchResult,
   PlatformResult,
   SearchFilters,
   PlatformCategory,
@@ -17,8 +16,7 @@ interface AppState {
   currentResults: PlatformResult[];
   searchError: string | null;
   
-  // Historique des recherches
-  searchHistory: SearchResult[];
+
   
   // Filtres
   filters: SearchFilters;
@@ -28,9 +26,7 @@ interface AppState {
   
   // Préférences
   preferences: {
-    maxHistoryItems: number;
     enabledPlatforms: PlatformType[];
-    autoSaveResults: boolean;
   };
   
   // Actions de recherche
@@ -41,10 +37,7 @@ interface AppState {
   setSearchError: (error: string | null) => void;
   clearCurrentSearch: () => void;
   
-  // Actions d'historique
-  addSearchToHistory: (search: SearchResult) => void;
-  removeSearchFromHistory: (timestamp: number) => void;
-  clearSearchHistory: () => void;
+
   
   // Actions de filtres
   setFilters: (filters: Partial<SearchFilters>) => void;
@@ -60,22 +53,19 @@ interface AppState {
   
   // Utilitaires
   getFilteredResults: () => PlatformResult[];
-  getSearchStats: () => { total: number; available: number; taken: number; checking: number; error: number };
+  getSearchStats: () => { total: number; available: number; taken: number; error: number };
 }
 
 const defaultFilters: SearchFilters = {
-  categories: ['development', 'social', 'stores', 'domains'],
-  status: ['available', 'taken', 'checking', 'error'],
-  priority: ['high', 'medium', 'low']
+  categories: ['development', 'domains', 'stores'],
+  status: ['available', 'taken', 'error'] // Suppression de 'checking' par défaut
 };
 
 const defaultPreferences = {
-  maxHistoryItems: 100,
   enabledPlatforms: [
-    'github', 'npm', 'twitter', 'instagram', 'domain-com', 'domain-io',
-    'pypi', 'crates', 'youtube', 'linkedin', 'chrome-store', 'vscode-extensions'
-  ] as PlatformType[],
-  autoSaveResults: true
+    'github', 'npm', 'domain-com', 'domain-io',
+      'pypi', 'crates', 'chrome-store', 'vscode-extensions'
+  ] as PlatformType[]
 };
 
 export const useAppStore = create<AppState>()(persist(
@@ -85,7 +75,7 @@ export const useAppStore = create<AppState>()(persist(
     isSearching: false,
     currentResults: [],
     searchError: null,
-    searchHistory: [],
+
     filters: defaultFilters,
     theme: 'system',
     preferences: defaultPreferences,
@@ -114,22 +104,7 @@ export const useAppStore = create<AppState>()(persist(
       isSearching: false
     }),
     
-    // Actions d'historique
-    addSearchToHistory: (search: SearchResult) => {
-      const { searchHistory, preferences } = get();
-      const newHistory = [search, ...searchHistory]
-        .slice(0, preferences.maxHistoryItems);
-      set({ searchHistory: newHistory });
-    },
-    
-    removeSearchFromHistory: (timestamp: number) => {
-      const { searchHistory } = get();
-      const newHistory = searchHistory.filter(s => s.timestamp !== timestamp);
-      set({ searchHistory: newHistory });
-    },
-    
-    clearSearchHistory: () => set({ searchHistory: [] }),
-    
+
     // Actions de filtres
     setFilters: (newFilters: Partial<SearchFilters>) => {
       const { filters } = get();
@@ -166,11 +141,27 @@ export const useAppStore = create<AppState>()(persist(
     // Utilitaires
     getFilteredResults: () => {
       const { currentResults, filters } = get();
-      return currentResults.filter(result => {
+      const filtered = currentResults.filter(result => {
         const categoryMatch = filters.categories.includes(result.category);
         const statusMatch = filters.status.includes(result.status);
-        const priorityMatch = !result.priority || filters.priority.includes(result.priority);
-        return categoryMatch && statusMatch && priorityMatch;
+        return categoryMatch && statusMatch;
+      });
+      
+      // Trier par statut puis par ordre alphabétique :
+      // 1. D'abord les "disponible" par ordre alphabétique
+      // 2. Ensuite les "pris" par ordre alphabétique
+      // 3. Puis les autres statuts par ordre alphabétique
+      return filtered.sort((a, b) => {
+        const statusOrder: Record<string, number> = { 'available': 0, 'taken': 1, 'error': 2 };
+        const orderA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 99;
+        const orderB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 99;
+        
+        // Si même statut, trier par ordre alphabétique du nom de la plateforme
+        if (orderA === orderB) {
+          return a.platform.localeCompare(b.platform);
+        }
+        
+        return orderA - orderB;
       });
     },
     
@@ -180,7 +171,6 @@ export const useAppStore = create<AppState>()(persist(
         total: currentResults.length,
         available: currentResults.filter(r => r.status === 'available').length,
         taken: currentResults.filter(r => r.status === 'taken').length,
-        checking: currentResults.filter(r => r.status === 'checking').length,
         error: currentResults.filter(r => r.status === 'error').length
       };
     }
@@ -188,7 +178,6 @@ export const useAppStore = create<AppState>()(persist(
   {
     name: 'namescout-store',
     partialize: (state) => ({
-      searchHistory: state.searchHistory,
       filters: state.filters,
       theme: state.theme,
       preferences: state.preferences

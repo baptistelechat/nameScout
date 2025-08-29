@@ -90,7 +90,6 @@ export async function GET(
       category: config.category,
       name,
       status: result.status,
-      priority: config.priority,
       lastChecked: Date.now(),
       url: result.status === 'taken' ? config.apiEndpoint?.replace('{name}', name) : undefined,
       error: result.errorMessage,

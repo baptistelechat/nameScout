@@ -15,28 +15,22 @@ import type { AvailabilityStatus } from '@/types';
 
 const STATUS_CONFIG = {
   available: {
-    label: 'Disponible',
+    label: "Disponible",
     icon: CheckCircle,
-    color: 'text-green-500',
-    description: 'Noms disponibles sur ces plateformes'
+    color: "text-green-500",
+    description: "Nom disponible sur cette plateforme"
   },
   taken: {
-    label: 'Pris',
+    label: "Pris",
     icon: XCircle,
-    color: 'text-red-500',
-    description: 'Noms déjà utilisés sur ces plateformes'
-  },
-  checking: {
-    label: 'En cours',
-    icon: Loader2,
-    color: 'text-blue-500',
-    description: 'Vérifications en cours'
+    color: "text-red-500",
+    description: "Nom déjà pris sur cette plateforme"
   },
   error: {
-    label: 'Erreur',
+    label: "Erreur",
     icon: AlertCircle,
-    color: 'text-orange-500',
-    description: 'Erreurs lors de la vérification'
+    color: "text-orange-500",
+    description: "Erreur lors de la vérification"
   }
 } as const;
 
@@ -78,9 +72,7 @@ export const StatusFilter = () => {
               {filters.status.includes('taken') && (
                 <XCircle className="h-3 w-3 text-red-500" />
               )}
-              {filters.status.includes('checking') && (
-                <Loader2 className="h-3 w-3 text-blue-500" />
-              )}
+
               {filters.status.includes('error') && (
                 <AlertCircle className="h-3 w-3 text-orange-500" />
               )}
@@ -126,7 +118,6 @@ export const StatusFilter = () => {
             <div className="flex items-center space-x-1">
               <CheckCircle className="h-3 w-3 text-green-500" />
               <XCircle className="h-3 w-3 text-red-500" />
-              <Loader2 className="h-3 w-3 text-blue-500" />
               <AlertCircle className="h-3 w-3 text-orange-500" />
             </div>
             <span>Tous les statuts</span>
@@ -150,7 +141,7 @@ export const StatusFilter = () => {
             >
               <div className="flex items-center space-x-2 flex-1">
                 <IconComponent 
-                  className={`h-4 w-4 ${config.color} ${status === 'checking' ? 'animate-spin' : ''}`} 
+                  className={`h-4 w-4 ${config.color}`} 
                 />
                 <div className="flex-1">
                   <div className="font-medium">{config.label}</div>
@@ -171,7 +162,7 @@ export const StatusFilter = () => {
         </DropdownMenuLabel>
         
         <DropdownMenuCheckboxItem
-          checked={filters.status.includes('available') && filters.status.includes('taken') && !filters.status.includes('checking') && !filters.status.includes('error')}
+          checked={filters.status.includes('available') && filters.status.includes('taken') && !filters.status.includes('error')}
           onCheckedChange={() => {
             // Sélectionner seulement disponible et pris
             const newStatus: AvailabilityStatus[] = ['available', 'taken'];
@@ -199,7 +190,7 @@ export const StatusFilter = () => {
         </DropdownMenuCheckboxItem>
         
         <DropdownMenuCheckboxItem
-          checked={filters.status.includes('available') && !filters.status.includes('taken') && !filters.status.includes('checking') && !filters.status.includes('error')}
+          checked={filters.status.includes('available') && !filters.status.includes('taken') && !filters.status.includes('error')}
           onCheckedChange={() => {
             // Sélectionner seulement disponible
             const newStatus: AvailabilityStatus[] = ['available'];

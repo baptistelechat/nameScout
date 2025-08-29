@@ -1,48 +1,53 @@
-import { useMemo } from 'react';
-import { ResultCard } from './ResultCard';
-import { useAppStore, useFilteredResults } from '@/lib/store';
-import { PLATFORM_CATEGORIES } from '@/lib/platforms';
-import type { PlatformCategory } from '@/types';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { AlertCircle, CheckCircle, XCircle, Loader2 } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { PLATFORM_CATEGORIES } from "@/lib/platforms";
+import { useAppStore, useFilteredResults } from "@/lib/store";
+import type { PlatformCategory, PlatformResult } from "@/types";
+import { AlertCircle, CheckCircle, Loader2, XCircle } from "lucide-react";
+import { useMemo } from "react";
+import { ResultCard } from "./ResultCard";
 
 // Composant pour les statistiques de recherche
 const SearchStats = () => {
   const { currentResults, isSearching } = useAppStore();
-  
+
   const stats = useMemo(() => {
     const total = currentResults.length;
-    const available = currentResults.filter(r => r.status === 'available').length;
-    const taken = currentResults.filter(r => r.status === 'taken').length;
-    const checking = currentResults.filter(r => r.status === 'checking').length;
-    const error = currentResults.filter(r => r.status === 'error').length;
-    
-    return { total, available, taken, checking, error };
+    const available = currentResults.filter(
+      (r) => r.status === "available"
+    ).length;
+    const taken = currentResults.filter((r) => r.status === "taken").length;
+    const error = currentResults.filter((r) => r.status === "error").length;
+
+    return { total, available, taken, error };
   }, [currentResults]);
-  
+
   if (!currentResults.length && !isSearching) return null;
-  
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
       <Card>
         <CardContent className="p-4 text-center">
-          <div className="text-2xl font-bold text-muted-foreground">{stats.total}</div>
+          <div className="text-2xl font-bold text-muted-foreground">
+            {stats.total}
+          </div>
           <div className="text-sm text-muted-foreground">Total</div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4 text-center">
           <div className="flex items-center justify-center space-x-1">
             <CheckCircle className="h-4 w-4 text-green-500" />
-            <div className="text-2xl font-bold text-green-600">{stats.available}</div>
+            <div className="text-2xl font-bold text-green-600">
+              {stats.available}
+            </div>
           </div>
           <div className="text-sm text-muted-foreground">Disponibles</div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardContent className="p-4 text-center">
           <div className="flex items-center justify-center space-x-1">
@@ -52,22 +57,14 @@ const SearchStats = () => {
           <div className="text-sm text-muted-foreground">Pris</div>
         </CardContent>
       </Card>
-      
-      <Card>
-        <CardContent className="p-4 text-center">
-          <div className="flex items-center justify-center space-x-1">
-            <Loader2 className="h-4 w-4 text-blue-500 animate-spin" />
-            <div className="text-2xl font-bold text-blue-600">{stats.checking}</div>
-          </div>
-          <div className="text-sm text-muted-foreground">En cours</div>
-        </CardContent>
-      </Card>
-      
+
       <Card>
         <CardContent className="p-4 text-center">
           <div className="flex items-center justify-center space-x-1">
             <AlertCircle className="h-4 w-4 text-orange-500" />
-            <div className="text-2xl font-bold text-orange-600">{stats.error}</div>
+            <div className="text-2xl font-bold text-orange-600">
+              {stats.error}
+            </div>
           </div>
           <div className="text-sm text-muted-foreground">Erreurs</div>
         </CardContent>
@@ -95,20 +92,33 @@ const ResultSkeleton = () => (
 // Composant pour une section de catégorie
 interface CategorySectionProps {
   category: PlatformCategory;
-  results: any[];
+  results: PlatformResult[];
   isSearching: boolean;
 }
 
-const CategorySection = ({ category, results, isSearching }: CategorySectionProps) => {
+const CategorySection = ({
+  category,
+  results,
+  isSearching,
+}: CategorySectionProps) => {
   const categoryInfo = PLATFORM_CATEGORIES[category];
-  const categoryResults = results.filter(r => r.category === category);
-  
+
+  // Les résultats sont déjà filtrés par catégorie, on applique juste le tri
+  const categoryResults = [...results].sort((a, b) => {
+    const statusOrder: Record<string, number> = { available: 0, taken: 1, error: 2 };
+    // CORRECTION: utiliser !== undefined au lieu de || pour gérer la valeur 0
+    const orderA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 99;
+    const orderB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 99;
+    return orderA - orderB;
+  });
+
   if (!categoryResults.length && !isSearching) return null;
-  
-  const availableCount = categoryResults.filter(r => r.status === 'available').length;
-  const takenCount = categoryResults.filter(r => r.status === 'taken').length;
-  const checkingCount = categoryResults.filter(r => r.status === 'checking').length;
-  
+
+  const availableCount = categoryResults.filter(
+    (r) => r.status === "available"
+  ).length;
+  const takenCount = categoryResults.filter((r) => r.status === "taken").length;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -118,7 +128,7 @@ const CategorySection = ({ category, results, isSearching }: CategorySectionProp
             {categoryResults.length} plateformes
           </Badge>
         </div>
-        
+
         <div className="flex space-x-2">
           {availableCount > 0 && (
             <Badge className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
@@ -130,25 +140,13 @@ const CategorySection = ({ category, results, isSearching }: CategorySectionProp
               {takenCount} pris
             </Badge>
           )}
-          {checkingCount > 0 && (
-            <Badge className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-              {checkingCount} en cours
-            </Badge>
-          )}
         </div>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {categoryResults.map((result) => (
           <ResultCard key={result.platform} result={result} />
         ))}
-        
-        {/* Skeletons pour les plateformes en cours de vérification */}
-        {isSearching && checkingCount > 0 && (
-          Array.from({ length: Math.min(checkingCount, 4) }).map((_, index) => (
-            <ResultSkeleton key={`skeleton-${category}-${index}`} />
-          ))
-        )}
       </div>
     </div>
   );
@@ -158,41 +156,42 @@ const CategorySection = ({ category, results, isSearching }: CategorySectionProp
 export const ResultGrid = () => {
   const { searchTerm, isSearching, currentResults } = useAppStore();
   const filteredResults = useFilteredResults();
-  
+
   // Grouper les résultats par catégorie
   const resultsByCategory = useMemo(() => {
-    const grouped: Record<PlatformCategory, any[]> = {
+    const grouped: Record<PlatformCategory, PlatformResult[]> = {
       development: [],
-      social: [],
+      domains: [],
       stores: [],
-      domains: []
     };
-    
-    filteredResults.forEach(result => {
+
+    filteredResults.forEach((result) => {
       if (grouped[result.category]) {
         grouped[result.category].push(result);
       }
     });
-    
+
     return grouped;
   }, [filteredResults]);
-  
+
   // Si aucune recherche n'a été effectuée
   if (!searchTerm && !isSearching && !currentResults.length) {
     return (
       <div className="text-center py-12">
         <div className="max-w-md mx-auto">
           <div className="text-6xl mb-4">🔍</div>
-          <h2 className="text-xl font-semibold mb-2">Prêt à vérifier un nom ?</h2>
+          <h2 className="text-xl font-semibold mb-2">
+            Prêt à vérifier un nom ?
+          </h2>
           <p className="text-muted-foreground">
-            Entrez un nom dans le champ de recherche ci-dessus pour vérifier sa disponibilité 
-            sur plus de 25 plateformes différentes.
+            Entrez un nom dans le champ de recherche ci-dessus pour vérifier sa
+            disponibilité sur plus de 25 plateformes différentes.
           </p>
         </div>
       </div>
     );
   }
-  
+
   // Si une recherche est en cours mais aucun résultat encore
   if (isSearching && !currentResults.length) {
     return (
@@ -206,7 +205,7 @@ export const ResultGrid = () => {
             Nous vérifions la disponibilité sur toutes les plateformes.
           </p>
         </div>
-        
+
         {/* Skeletons par catégorie */}
         {Object.keys(PLATFORM_CATEGORIES).map((category) => (
           <div key={category} className="space-y-4">
@@ -224,7 +223,7 @@ export const ResultGrid = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="space-y-8">
       {/* En-tête avec le terme recherché */}
@@ -241,32 +240,38 @@ export const ResultGrid = () => {
           )}
         </div>
       )}
-      
+
       {/* Statistiques */}
       <SearchStats />
-      
+
       {/* Résultats par catégorie */}
       <div className="space-y-8">
-        {(Object.keys(PLATFORM_CATEGORIES) as PlatformCategory[]).map((category) => (
-          <CategorySection
-            key={category}
-            category={category}
-            results={resultsByCategory[category]}
-            isSearching={isSearching}
-          />
-        ))}
+        {(Object.keys(PLATFORM_CATEGORIES) as PlatformCategory[]).map(
+          (category) => (
+            <CategorySection
+              key={category}
+              category={category}
+              results={resultsByCategory[category]}
+              isSearching={isSearching}
+            />
+          )
+        )}
       </div>
-      
+
       {/* Message si aucun résultat après filtrage */}
-      {!isSearching && filteredResults.length === 0 && currentResults.length > 0 && (
-        <div className="text-center py-12">
-          <div className="text-4xl mb-4">🔍</div>
-          <h2 className="text-lg font-semibold mb-2">Aucun résultat avec ces filtres</h2>
-          <p className="text-muted-foreground">
-            Essayez de modifier vos filtres pour voir plus de résultats.
-          </p>
-        </div>
-      )}
+      {!isSearching &&
+        filteredResults.length === 0 &&
+        currentResults.length > 0 && (
+          <div className="text-center py-12">
+            <div className="text-4xl mb-4">🔍</div>
+            <h2 className="text-lg font-semibold mb-2">
+              Aucun résultat avec ces filtres
+            </h2>
+            <p className="text-muted-foreground">
+              Essayez de modifier vos filtres pour voir plus de résultats.
+            </p>
+          </div>
+        )}
     </div>
   );
 };

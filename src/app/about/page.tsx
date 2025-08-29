@@ -1,24 +1,43 @@
-import { Layout } from '@/components/layout/Layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ExternalLink, Github, Heart, Zap, Shield, Globe } from 'lucide-react';
+import { Layout } from "@/components/layout/Layout";
+import { Badge } from "@/components/ui/badge";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { getAllPlatforms } from "@/lib/platforms";
+import { ExternalLink, Github, Globe, Heart, Shield, Zap } from "lucide-react";
 
 export default function AboutPage() {
+  const totalPlatforms = getAllPlatforms().length;
   const technologies = [
-    'Next.js 14',
-    'React 18',
-    'TypeScript',
-    'Tailwind CSS',
-    'shadcn/ui',
-    'Zustand',
-    'Lucide React'
+    "Next.js 14",
+    "React 18",
+    "TypeScript",
+    "Tailwind CSS",
+    "shadcn/ui",
+    "Zustand",
+    "Lucide React",
   ];
 
   const platforms = [
-    { category: 'Développement', count: 6, examples: ['GitHub', 'npm', 'PyPI', 'crates.io'] },
-    { category: 'Réseaux Sociaux', count: 6, examples: ['Twitter/X', 'Instagram', 'LinkedIn', 'YouTube'] },
-    { category: 'Stores & Extensions', count: 5, examples: ['Chrome Store', 'VS Code', 'App Store'] },
-    { category: 'Domaines Web', count: 8, examples: ['.com', '.io', '.dev', '.fr'] }
+    {
+      category: "Développement",
+      count: 8,
+      examples: ["GitHub", "npm", "PyPI", "crates.io"],
+    },
+    {
+      category: "Stores & Extensions",
+      count: 5,
+      examples: ["Chrome Store", "VS Code", "App Store"],
+    },
+    {
+      category: "Domaines Web",
+      count: 6,
+      examples: [".com", ".io", ".dev", ".fr"],
+    },
   ];
 
   return (
@@ -28,7 +47,8 @@ export default function AboutPage() {
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">À propos de NameScout</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Un outil moderne et gratuit pour vérifier la disponibilité de noms sur plus de 25 plateformes
+            Un outil moderne et gratuit pour vérifier la disponibilité de noms
+            sur plus de {totalPlatforms} plateformes
           </p>
         </div>
 
@@ -43,14 +63,16 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p>
-                NameScout est une application web qui simplifie le processus de recherche de noms pour les développeurs, 
-                créateurs et entrepreneurs. Au lieu de vérifier manuellement chaque plateforme une par une, NameScout 
-                effectue toutes les vérifications simultanément.
+                NameScout est une application web qui simplifie le processus de
+                recherche de noms pour les développeurs, créateurs et
+                entrepreneurs. Au lieu de vérifier manuellement chaque
+                plateforme une par une, NameScout effectue toutes les
+                vérifications simultanément.
               </p>
               <p>
-                L'application vérifie la disponibilité sur les plateformes de développement (GitHub, npm, PyPI), 
-                les réseaux sociaux (Twitter, Instagram, LinkedIn), les stores d'applications, et les domaines web 
-                les plus populaires.
+                L'application vérifie la disponibilité sur les plateformes de
+                développement (GitHub, npm, PyPI), les stores d'applications, et
+                les domaines web les plus populaires.
               </p>
             </CardContent>
           </Card>
@@ -63,7 +85,7 @@ export default function AboutPage() {
                 Plateformes supportées
               </CardTitle>
               <CardDescription>
-                Plus de 25 plateformes organisées par catégories
+                Plus de {totalPlatforms} plateformes organisées par catégories
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -72,10 +94,12 @@ export default function AboutPage() {
                   <div key={platform.category} className="space-y-2">
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold">{platform.category}</h4>
-                      <Badge variant="secondary">{platform.count} plateformes</Badge>
+                      <Badge variant="secondary">
+                        {platform.count} plateformes
+                      </Badge>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      {platform.examples.join(', ')}, et plus...
+                      {platform.examples.join(", ")}, et plus...
                     </p>
                   </div>
                 ))}
@@ -96,13 +120,15 @@ export default function AboutPage() {
                 <div className="space-y-2">
                   <h4 className="font-semibold">🚀 Vérification rapide</h4>
                   <p className="text-sm text-muted-foreground">
-                    Vérifications parallèles sur toutes les plateformes en quelques secondes
+                    Vérifications parallèles sur toutes les plateformes en
+                    quelques secondes
                   </p>
                 </div>
                 <div className="space-y-2">
                   <h4 className="font-semibold">🔒 Confidentialité</h4>
                   <p className="text-sm text-muted-foreground">
-                    Aucune donnée envoyée à nos serveurs, tout reste dans votre navigateur
+                    Aucune donnée envoyée à nos serveurs, tout reste dans votre
+                    navigateur
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -114,7 +140,8 @@ export default function AboutPage() {
                 <div className="space-y-2">
                   <h4 className="font-semibold">🌙 Thème sombre</h4>
                   <p className="text-sm text-muted-foreground">
-                    Basculement automatique ou manuel entre thèmes clair et sombre
+                    Basculement automatique ou manuel entre thèmes clair et
+                    sombre
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -124,9 +151,9 @@ export default function AboutPage() {
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-semibold">💾 Historique local</h4>
+                  <h4 className="font-semibold">⚡ Temps réel</h4>
                   <p className="text-sm text-muted-foreground">
-                    Sauvegarde automatique de vos recherches dans le navigateur
+                    Résultats instantanés avec mise à jour en temps réel
                   </p>
                 </div>
               </div>
@@ -138,7 +165,8 @@ export default function AboutPage() {
             <CardHeader>
               <CardTitle>Technologies utilisées</CardTitle>
               <CardDescription>
-                Application moderne construite avec les dernières technologies web
+                Application moderne construite avec les dernières technologies
+                web
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -162,12 +190,12 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p>
-                NameScout est un projet open source. Le code source est disponible sur GitHub 
-                et les contributions sont les bienvenues !
+                NameScout est un projet open source. Le code source est
+                disponible sur GitHub et les contributions sont les bienvenues !
               </p>
               <div className="flex gap-4">
                 <a
-                  href="https://github.com/namescout/namescout"
+                  href="https://github.com/baptistelechat/nameScout"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-primary hover:underline"
@@ -187,14 +215,16 @@ export default function AboutPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <p>
-                Des questions, suggestions ou problèmes ? N'hésitez pas à nous contacter !
+                Des questions, suggestions ou problèmes ? N'hésitez pas à nous
+                contacter !
               </p>
               <div className="space-y-2">
                 <p className="text-sm">
                   <strong>Email :</strong> contact@namescout.dev
                 </p>
                 <p className="text-sm">
-                  <strong>Issues GitHub :</strong> Pour signaler des bugs ou proposer des améliorations
+                  <strong>Issues GitHub :</strong> Pour signaler des bugs ou
+                  proposer des améliorations
                 </p>
               </div>
             </CardContent>
